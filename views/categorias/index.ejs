@@ -1,0 +1,27 @@
+<%- include('../partials-head') %>
+<h1>Categorias</h1>
+<% if (erro) { %><p class="erro"><%= erro %></p><% } %>
+<form method="POST" action="/categorias" class="busca">
+  <input name="nome" placeholder="Nova categoria" required>
+  <button>Cadastrar</button>
+</form>
+<table>
+  <thead><tr><th>ID</th><th>Nome</th><th>Produtos</th><th>Ações</th></tr></thead>
+  <tbody>
+  <% categorias.forEach(c => { %>
+    <tr>
+      <td><%= c.id %></td>
+      <td><a href="/produtos/categoria/<%= c.id %>"><%= c.nome %></a></td>
+      <td><%= c.produtos.length %></td>
+      <td>
+        <form method="POST" action="/categorias/<%= c.id %>/excluir" style="display:inline"
+              onsubmit="return confirm('Excluir esta categoria? Os produtos ficarão sem categoria.')">
+          <button class="link">Excluir</button>
+        </form>
+      </td>
+    </tr>
+  <% }) %>
+  <% if (categorias.length === 0) { %><tr><td colspan="4">Nenhuma categoria cadastrada.</td></tr><% } %>
+  </tbody>
+</table>
+<%- include('../partials-foot') %>
